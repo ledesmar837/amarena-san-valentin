@@ -1,0 +1,4 @@
+# Originales PNG (no se publican: se usan los .jpg optimizados)
+*.png
+Thumbs.db
+desktop.ini

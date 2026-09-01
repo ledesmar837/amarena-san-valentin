@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://amarena-san-valentin.vercel.app/sitemap.xml
