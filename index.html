@@ -21,7 +21,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <!-- Datos estructurados: tienda -->
 <script type="application/ld+json">
@@ -258,6 +258,8 @@ section{padding-block:clamp(64px,9vw,108px)}
    ═══════════════════════════════════════════════ */
 .grid-products{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1.2rem,2.4vw,1.8rem)}
 .grid-products.cols-2{grid-template-columns:repeat(2,1fr)}
+/* Fix móvil: las tarjetas no deben forzar el ancho mínimo de las columnas */
+.grid-products>*,.featured-grid>*{min-width:0}
 .p-card{
   background:var(--cream-2);border:1px solid var(--line);border-radius:var(--r-lg);
   padding:.8rem .8rem 1.2rem;display:flex;flex-direction:column;position:relative;
@@ -327,7 +329,22 @@ section{padding-block:clamp(64px,9vw,108px)}
   .p-price{font-size:1rem;margin-bottom:.6rem}
   .stepper button{width:31px;height:31px}
   .btn{padding:.85rem 1.4rem;font-size:.9rem}
+  .p-card .btn{white-space:normal;padding:.8rem .65rem;font-size:.82rem;line-height:1.25}
 }
+
+/* ═══════════════════════════════════════════════
+   MAYORISTA — banner protagonista
+   ═══════════════════════════════════════════════ */
+.wholesale-hero{background:linear-gradient(120deg,var(--wine) 0%,#6E2B3A 55%,#7A3445 100%);color:#FBEFE9;border-block:1px solid rgba(185,151,79,.4)}
+.wholesale-hero .container{display:flex;align-items:center;justify-content:space-between;gap:1.8rem;flex-wrap:wrap;padding-block:clamp(30px,5vw,52px)}
+.wholesale-hero .wh-txt{max-width:600px}
+.wholesale-hero .kicker{color:var(--gold)}
+.wholesale-hero h2{color:#FBEFE9;margin:.45rem 0 .55rem;font-size:clamp(1.6rem,3.2vw,2.4rem)}
+.wholesale-hero h2 em{font-style:italic;color:var(--gold)}
+.wholesale-hero p{color:rgba(251,239,233,.88);font-size:.98rem;font-weight:300;max-width:520px}
+.wholesale-hero .btn{background:var(--gold);color:#3B2328;font-weight:600;box-shadow:0 10px 26px rgba(0,0,0,.25)}
+.wholesale-hero .btn:hover{background:#C9A65F;transform:translateY(-2px)}
+@media(max-width:640px){.wholesale-hero .container{flex-direction:column;align-items:flex-start}.wholesale-hero .btn{width:100%;text-align:center}}
 
 /* ═══════════════════════════════════════════════
    8. PROMOCIÓN DE ENVÍO — franja editorial
@@ -728,6 +745,18 @@ section{padding-block:clamp(64px,9vw,108px)}
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ═══════════ MAYORISTA — banner protagonista ═══════════ -->
+<section class="wholesale-hero" id="mayorista-top">
+  <div class="container">
+    <div class="wh-txt">
+      <span class="kicker">Por mayor · Para negocios</span>
+      <h2>¿Vendes por catálogo? Precios mayoristas <em>desde 10 unidades</em></h2>
+      <p>Atención especial y tarifas por volumen para emprendedores, catálogos y tiendas. Escríbenos por WhatsApp y armamos tu pedido.</p>
+    </div>
+    <button type="button" class="btn btn-solid" data-wa="mayorista">Solicitar precio mayorista</button>
   </div>
 </section>
 
@@ -1260,7 +1289,7 @@ function productCard(p, delay = 0){
     <div class="p-media">
       ${p.badge ? `<span class="p-badge" data-badge="${p.badge}">${p.badge}</span>` : ''}
       ${out ? `<div class="p-soldout"><span>Agotado</span></div>` : ''}
-      <img src="${p.imagen}" alt="${p.nombre} — peluche de San Valentín" loading="lazy">
+      <img src="${p.imagen}" alt="${p.nombre} — peluche de San Valentín" loading="lazy" decoding="async">
     </div>
     <div class="p-body">
       <span class="p-stock ${out?'out':''}">
@@ -1341,7 +1370,7 @@ function renderCart(){
   /* lista de ítems */
   $('#cartItems').innerHTML = items.map(({p,q}) => `
     <div class="c-item">
-      <img src="${p.imagen}" alt="${p.nombre}" loading="lazy">
+      <img src="${p.imagen}" alt="${p.nombre}" loading="lazy" decoding="async">
       <div>
         <div class="c-name">${p.nombre}</div>
         <div class="c-price">${fmt(p.precio)} c/u</div>
