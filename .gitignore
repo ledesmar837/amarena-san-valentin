@@ -2,3 +2,6 @@
 *.png
 Thumbs.db
 desktop.ini
+
+.vercel
+.env*
